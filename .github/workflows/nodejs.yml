@@ -40,5 +40,5 @@ jobs:
       # Deploy the project (this is an example step)
       - name: Deploy to production
         run: |
-          echo "Deploying to production"
+          echo "Deploying to production server"
           # Add your deploy command here, e.g., using AWS CLI, SSH, etc.
