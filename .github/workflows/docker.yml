@@ -22,7 +22,7 @@ jobs:
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.gummadi108 }}
-          password: ${{ secrets.March%032025 }}
+          password: ${{ secrets.'March%032025' }}
 
       # Step 3: Set up Maven (if you're using Maven to build the Java app)
       - name: Set up Maven
