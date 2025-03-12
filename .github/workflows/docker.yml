@@ -50,4 +50,4 @@ jobs:
       - name: Tag the image as latest and push
         run: |
           docker tag gummadi108/gummadi1300:${{ github.sha }} gummadi108/gummadi1300:latest
-          docker push gummadi108/gummadi1300:latest    
+          docker push gummadi108/gummadi1300:latest      
