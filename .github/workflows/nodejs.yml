@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      # Check out the code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # or the version of Node.js you want
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          npm install
+
+      # Run tests
+      - name: Run tests
+        run: |
+          npm test
+
+      # Build the project (example for a Node.js project)
+      - name: Build the project
+        run: |
+          npm run build
+
+      # Deploy the project (this is an example step)
+      - name: Deploy to production
+        run: |
+          echo "Deploying to production"
+          # Add your deploy command here, e.g., using AWS CLI, SSH, etc.
