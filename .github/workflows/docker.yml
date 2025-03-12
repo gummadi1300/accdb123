@@ -1,0 +1,53 @@
+name: Build and Push Java Docker Image
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Log in to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # Step 3: Set up Maven (if you're using Maven to build the Java app)
+      - name: Set up Maven
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adoptopenjdk'
+
+      # Step 4: Build the Java application (skip tests to speed up build)
+      - name: Build Java application with Maven
+        run: |
+          ./mvnw clean install -DskipTests
+
+      # Step 5: Build Docker image
+      - name: Build Docker image
+        run: |
+          docker build -t gummadi108/gummadi1300:${{ github.sha }} .
+
+      # Step 6: Push Docker image to Docker Hub
+      - name: Push Docker image
+        run: |
+          docker push gummadi108/gummadi1300:${{ github.sha }}
+
+      # Optionally, tag the image as "latest" and push it
+      - name: Tag the image as latest and push
+        run: |
+          docker tag gummadi108/gummadi1300:${{ github.sha }} gummadi108/gummadi1300:latest
+          docker push gummadi108/gummadi1300:latest
